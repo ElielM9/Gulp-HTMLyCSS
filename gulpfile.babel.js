@@ -4,11 +4,13 @@ const { src, dest, watch, parallel } = require(`gulp`);
 const htmlMin = require("gulp-htmlmin");
 
 //CSS
-const plumber = require(`gulp-plumber`);
 const autoprefixer = require(`autoprefixer`);
 const cssnano = require(`cssnano`);
 const postcss = require(`gulp-postcss`);
 const sourcemaps = require(`gulp-sourcemaps`);
+
+//PLUMBER
+const plumber = require(`gulp-plumber`);
 
 //IMAGENES
 const cache = require(`gulp-cache`);
@@ -60,6 +62,7 @@ function img(done) {
   };
 
   src(`src/assets/img/**/*.{png,jpg}`)
+    .pipe(plumber())
     .pipe(cache(imgMin(options)))
     .pipe(dest(`public/assets/img`));
 
@@ -72,6 +75,7 @@ function vWebp(done) {
   };
 
   src(`src/assets/img/**/*.{png,jpg}`)
+    .pipe(plumber())
     .pipe(webp(options))
     .pipe(dest(`public/assets/img`));
 
@@ -84,6 +88,7 @@ function vAvif(done) {
   };
 
   src(`src/assets/img/**/*.{png,jpg}`)
+    .pipe(plumber())
     .pipe(avif(options))
     .pipe(dest(`public/assets/img`));
 
@@ -95,6 +100,7 @@ function javaScript(done) {
   src(`src/js/**/*.js`)
     .pipe(sourcemaps.init())
     .pipe(concat("scripts-min.js"))
+    .pipe(plumber())
     .pipe(babel())
     .pipe(terser())
     .pipe(sourcemaps.write(`.`))
@@ -105,7 +111,7 @@ function javaScript(done) {
 
 function dev(done) {
   watch(`src/views/**/*.html`);
-  watch(`src/scss/**/*.scss`, css);
+  watch(`src/styles/**/*.scss`, css);
   watch(`src/js/**/*.js`, javaScript);
 
   done();
