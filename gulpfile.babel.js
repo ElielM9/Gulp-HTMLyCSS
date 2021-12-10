@@ -111,7 +111,7 @@ function javaScript(done) {
 
 function dev(done) {
   watch(`src/views/**/*.html`);
-  watch(`src/styles/**/*.scss`, css);
+  watch(`src/styles/**/*.css`, css);
   watch(`src/js/**/*.js`, javaScript);
 
   done();
