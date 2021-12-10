@@ -1,7 +1,9 @@
 const { src, dest, watch, parallel } = require(`gulp`);
 
+//HTML
+const htmlMin = require("gulp-htmlmin");
+
 //CSS
-const sass = require(`gulp-sass`)(require(`sass`));
 const plumber = require(`gulp-plumber`);
 const autoprefixer = require(`autoprefixer`);
 const cssnano = require(`cssnano`);
@@ -15,13 +17,35 @@ const webp = require(`gulp-webp`);
 const avif = require(`gulp-avif`);
 
 //JAVASCRIPT
+const babel = require(`gulp-babel`);
 const terser = require(`gulp-terser-js`);
 
-function css(done) {
-  src(`src/scss/**/*.scss`) //Identificar el archivo sass a compilar
+//CONCAT
+const concat = require(`gulp-concat`);
+
+//HTML
+function html(done) {
+  const options = {
+    collapseWhitespace: true,
+    removeComments: true,
+  };
+
+  src("src/views/**/*.html")
     .pipe(sourcemaps.init())
     .pipe(plumber())
-    .pipe(sass()) //Compilar
+    .pipe(htmlMin(options))
+    .pipe(sourcemaps.write(`.`))
+    .pipe(dest("public/"));
+
+  done();
+}
+
+//CSS
+function css(done) {
+  src(`src/styles/**/*.css`) //Identificar el archivo sass a compilar
+    .pipe(sourcemaps.init())
+    .pipe(plumber())
+    .pipe(concat(`styles.css`))
     .pipe(postcss([autoprefixer(), cssnano()]))
     .pipe(sourcemaps.write(`.`))
     .pipe(dest(`public/styles`)); //Almacenar en el disco duro
@@ -29,6 +53,7 @@ function css(done) {
   done();
 }
 
+//IMAGENES
 function img(done) {
   const options = {
     optimizationLevel: 3,
@@ -65,26 +90,31 @@ function vAvif(done) {
   done();
 }
 
+//JAVASCRIPT
 function javaScript(done) {
   src(`src/js/**/*.js`)
     .pipe(sourcemaps.init())
+    .pipe(concat("scripts-min.js"))
+    .pipe(babel())
     .pipe(terser())
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write(`.`))
     .pipe(dest(`public/js`));
 
   done();
 }
 
 function dev(done) {
+  watch(`src/views/**/*.html`);
   watch(`src/scss/**/*.scss`, css);
   watch(`src/js/**/*.js`, javaScript);
 
   done();
 }
 
+exports.html = html;
 exports.css = css;
 exports.js = javaScript;
 exports.img = img;
 exports.vWebp = vWebp;
 exports.vAvif = vAvif;
-exports.dev = parallel(img, vWebp, vAvif, javaScript, dev);
+exports.dev = parallel(html, javaScript, img, vWebp, vAvif, dev);
