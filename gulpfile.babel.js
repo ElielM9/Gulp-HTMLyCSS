@@ -64,13 +64,13 @@ function css(done) {
 
 function clean(done) {
   const content = {
-    conten: [`./public/*.html`],
+    conten: [`public/*.html`],
   };
 
-  src(`./public/css/styles.css`)
+  src(`public/styles/styles.css`)
     .pipe(plumber())
     .pipe(clean(content))
-    .pipe(dest(`./public/css`));
+    .pipe(dest(`public/styles`));
 
   done();
 }
