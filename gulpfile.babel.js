@@ -8,7 +8,7 @@ const autoprefixer = require(`autoprefixer`);
 const cssnano = require(`cssnano`);
 const postcss = require(`gulp-postcss`);
 const sourcemaps = require(`gulp-sourcemaps`);
-const clean = require("gulp-purgecss");
+const clean = require(`gulp-purgecss`);
 
 //PLUMBER
 const plumber = require(`gulp-plumber`);
@@ -26,7 +26,7 @@ const terser = require(`gulp-terser-js`);
 //CONCAT
 const concat = require(`gulp-concat`);
 //CACHE-BUST
-const cacheBust = require("gulp-cache-bust");
+const cacheBust = require(`gulp-cache-bust`);
 
 //HTML
 function html(done) {
@@ -62,13 +62,12 @@ function css(done) {
   done();
 }
 
-function clean(done) {
+function cleanCSS(done) {
   const content = {
-    conten: [`public/*.html`],
+    content: [`public/*.html`],
   };
 
   src(`public/styles/styles.css`)
-    .pipe(plumber())
     .pipe(clean(content))
     .pipe(dest(`public/styles`));
 
@@ -139,9 +138,9 @@ function dev(done) {
 
 exports.html = html;
 exports.css = css;
-exports.clean = clean;
+exports.clean = cleanCSS;
 exports.js = javaScript;
 exports.img = img;
 exports.vWebp = vWebp;
 exports.vAvif = vAvif;
-exports.dev = parallel(img, vWebp, vAvif, dev);
+exports.dev = parallel(clean, img, vWebp, vAvif, dev);
