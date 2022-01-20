@@ -132,6 +132,8 @@ function dev(done) {
   watch(`src/views/**/*.html`, html);
   watch(`src/styles/**/*.css`, css);
   watch(`src/js/**/*.js`, javaScript);
+  watch(`src/assets/img/**/*.{png,jpg}`, img);
+
 
   done();
 }
