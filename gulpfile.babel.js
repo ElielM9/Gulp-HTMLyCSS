@@ -80,7 +80,7 @@ function img(done) {
     optimizationLevel: 3,
   };
 
-  src(`src/assets/img/**/*.{png,jpg}`)
+  src(`src/assets/img/**/*.{png,jpg,svg}`)
     .pipe(plumber())
     .pipe(cache(imgMin(options)))
     .pipe(dest(`public/assets/img`));
