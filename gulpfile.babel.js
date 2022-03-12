@@ -118,7 +118,6 @@ function vAvif(done) {
 function javaScript(done) {
   src(`src/js/**/*.js`)
     .pipe(sourcemaps.init())
-    .pipe(concat("scripts-min.js"))
     .pipe(plumber())
     .pipe(babel())
     .pipe(terser())
