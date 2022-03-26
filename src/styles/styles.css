@@ -51,17 +51,12 @@ ul {
 img {
     display: block;
     max-width: 100%;
+    width: auto;
     height: auto;
 }
 
-
-.container {
+[class$="__contenedor"] {
     width: 95%;
     max-width: 120rem;
     margin: 0 auto;
-}
-
-/* UTILIDADES */
-.text-center {
-    text-align: center;
 }
