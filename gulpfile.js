@@ -8,12 +8,11 @@ const htmlMin = require("gulp-htmlmin");// Minifica HTML
 const autoprefixer = require(`autoprefixer`);
 const cssnano = require(`cssnano`);
 const postcss = require(`gulp-postcss`);
-const sourcemaps = require(`gulp-sourcemaps`);
 const clean = require(`gulp-purgecss`); //Limpia estilos CSS no usados
 
 //Plugins para imágenes
-const cache = require(`gulp-cache`);
 const imgMin = require(`gulp-imagemin`);//Optimiza imágenes
+const cache = require(`gulp-cache`);
 const webp = require(`gulp-webp`);
 const avif = require(`gulp-avif`);
 
@@ -21,6 +20,7 @@ const avif = require(`gulp-avif`);
 const plumber = require(`gulp-plumber`);
 const concat = require(`gulp-concat`); // Concatena ficheros
 const cacheBust = require(`gulp-cache-bust`);
+const sourcemaps = require(`gulp-sourcemaps`);
 
 /** HTML
  * Toma todos los archivos HTML en la carpeta `src/views`, las minimiza, agrega una marca de tiempo al nombre del archivo, y los envía a la carpeta `public`
