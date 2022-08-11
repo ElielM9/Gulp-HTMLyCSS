@@ -24,7 +24,7 @@ npm i // npm install
 npm init
 npm install --save-dev gulp
 ```
-####HTML
+#### HTML
 ```bash
 npm install --save gulp-htmlmin ##Minifica y limpia nuestro HTML
 ```
